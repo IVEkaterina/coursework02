@@ -2,7 +2,7 @@ from typing import Union
 
 
 class Vacancies:
-    """ Что-то очень важное """
+    """ Класс для работы с вакансиями """
 
     __slots__ = ('name', 'vacancies_url', 'salary', 'description')
 
@@ -12,14 +12,14 @@ class Vacancies:
     description: str
 
     def __init__(self, name: str, vacancies_url: str, salary: Union[str, int, float], description: str):
-        """ sjhdf """
+        """ Конструктор для чего-то там """
         self.name = name
         self.vacancies_url = vacancies_url
         self.salary = self.__validate_salary(salary)
         self.description = description
 
     def __validate_salary(self, salary: str):
-        """ jkir """
+        """ Метод для валидирования данных """
         if salary is None or salary == "":
             return 0
         if isinstance(salary, str):
@@ -37,19 +37,19 @@ class Vacancies:
         raise ValueError("Некорректный формат зарплаты")
 
     def __eq__(self, other):
-        """ lkjfg """
+        """ Метод сравнения вакансий """
         if not isinstance(other, Vacancies):
             return NotImplemented
         return self.salary == other.salary
 
     def __lt__(self, other):
-        """ sdfh """
+        """ Метод сравнения вакансий """
         if not isinstance(other, Vacancies):
             return NotImplemented
         return self.salary < other.salary
 
     def __gt__(self, other):
-        """ sdj """
+        """ Метод сравнения вакансий """
         if not isinstance(other, Vacancies):
             return NotImplemented
         return self.salary > other.salary
