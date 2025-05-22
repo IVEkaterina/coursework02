@@ -9,6 +9,6 @@ class HhApiAbc(ABC):
         pass
 
     @abstractmethod
-    def load_vacancies(self, word: str):
+    def load_vacancies(self, keyword: str):
         """ Абстрактный метод для получения вакансий """
         pass
