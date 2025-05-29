@@ -24,11 +24,11 @@ class HeadHunterAPI(HhApiAbc):
             self.__params['text'] = keyword
             while self.__params.get('page') != 20:
                 response = requests.get(self.__url, params=self.__params)
-                vacancies = response.json()['items']
+                vacancies = (response.json()).get('items')
                 self.__vacancies.extend(vacancies)
                 self.__params['page'] += 1
-            # with open("../data/vacancies.json", "w", encoding="utf-8") as file:
-            #     json.dump(self.__vacancies, file, indent=4)
+            with open("../data/vacancies.json", "w", encoding="utf-8") as file:
+                json.dump(self.__vacancies, file, indent=4)
             return self.__vacancies
         else:
             raise ConnectionError("Где-то какая-то ошибочка")

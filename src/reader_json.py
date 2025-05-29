@@ -21,7 +21,7 @@ class ReaderJSON(ReaderABC):
             data = json.load(file)
             return data
 
-    def delete_vacancies(self, other: Vacancies):
+    def delete_vacancy(self, other: Vacancies):
         """ Метод удаления данных из файла """
         data = self.__load_vacancies()
         if other in data:
