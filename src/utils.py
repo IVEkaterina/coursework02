@@ -4,15 +4,20 @@ import re
 def sort_top_vacancies(vacancies: list[dict], n: int):
     """ Функция которая возврашвет топ вакансий по зарплате.
     На вход принимает вакансии и желаемое количество вакансий """
+    if vacancies:
+        def get_salary_from(vacancy):
+            salary = vacancy.get("salary")
+            if salary and salary.get("from"):
+                return salary["from"]
+            return 0
 
-    def get_salary_from(vacancy):
-        salary = vacancy.get("salary")
-        if salary and salary.get("from"):
-            return salary["from"]
-        return 0
+        sorted_list = sorted(vacancies, key=get_salary_from, reverse=True)
+        result = sorted_list[:n]
+        if not result:
+            return "По вашему запросу ничего не найдено"
+        return result
+    return "По вашему запросу ничего не найдено"
 
-    sorted_list = sorted(vacancies, key=get_salary_from, reverse=True)
-    return sorted_list[:n]
 
 def search_word_in_description(vacancies: list[dict], keyword: str):
     """ Функция, котороя принимает вакансии и слово для поиска вакансий с этим словом """
