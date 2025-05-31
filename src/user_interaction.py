@@ -37,6 +37,3 @@ def user_interaction():
 
     filter_description = search_word_in_description(vacancies, filter_words)
     pprint(filter_description)
-
-if __name__ == "__main__":
-    user_interaction()
