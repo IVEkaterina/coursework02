@@ -4,6 +4,8 @@ from pprint import pprint
 
 
 def user_interaction():
+    """ Функция для взаимодействия с пользователем """
+    number_vacancy = 1
     hh_api = HeadHunterAPI()
 
     search_query = input("Введите поисковый запрос: ")
@@ -17,7 +19,9 @@ def user_interaction():
         print("Ошибка: ожидается список словарей, а получено:", type(vacancies[0]))
         pprint(vacancies)
         return
-    pprint(vacancies)
+    for vacancy in vacancies:
+        pprint(f"Вакансия номер {number_vacancy}. name: '{vacancy['name']}', vacancies_url: '{vacancy['url']}', salary: '{vacancy['salary']}' ")
+        number_vacancy+=1
 
     while True:
         try:
