@@ -10,27 +10,36 @@ class ReaderJSON(ReaderABC):
     def __init__(self, file_path="../data/ready_vacancies.json"):
         self.__file_name = file_path
 
-    def __save_vacancies(self, vacancies: Vacancies):
+    def _ReaderABC__save_vacancies(self, vacancies: Vacancies):
         """ Метод сохранения данных в файл """
         with open(self.__file_name, "w", encoding="utf-8") as file:
             json.dump(vacancies, file, indent=4)
 
-    def __load_vacancies(self):
+    def load_vacancies(self):
         """ Метод получения данных из файла """
-        with open(self.__file_name, "r", encoding="utf-8") as file:
-            data = json.load(file)
-            return data
+        try:
+            with open(self.__file_name, "r", encoding="utf-8") as file:
+                content = file.read()
+                if not content.strip():
+                    return []
+                return json.loads(content)
+        except FileNotFoundError:
+            return []
 
     def delete_vacancy(self, other: Vacancies):
         """ Метод удаления данных из файла """
-        data = self.__load_vacancies()
-        if other in data:
-            data.remove(other)
-            self.__save_vacancies(data)
+        if not isinstance(other, Vacancies):
+            raise TypeError("Ожидается объект класса Vacancies")
+        data = self.load_vacancies()
+        if other.to_dict() in data:
+            data.remove(other.to_dict())
+            self._ReaderABC__save_vacancies(data)
 
     def add_vacancy(self, other: Vacancies):
         """ Метод добавления данных из файла """
-        data = self.__load_vacancies()
-        if other not in data:
-            data.append(other)
-            self.__save_vacancies(data)
+        if not isinstance(other, Vacancies):
+            raise TypeError("Ожидается объект класса Vacancies")
+        data = self.load_vacancies()
+        if other.to_dict() not in data:
+            data.append(other.to_dict())
+            self._ReaderABC__save_vacancies(data)

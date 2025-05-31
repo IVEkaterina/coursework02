@@ -29,10 +29,6 @@ class HeadHunterAPI(HhApiAbc):
                 self.__params['page'] += 1
             with open("../data/vacancies.json", "w", encoding="utf-8") as file:
                 json.dump(self.__vacancies, file, indent=4)
-            if not self.__vacancies:
-                return "По вашему запросу ничего найдено"
             return self.__vacancies
         else:
             raise ConnectionError("Где-то какая-то ошибочка")
-# gg=HeadHunterAPI()
-# print(gg.load_vacancies("Python"))

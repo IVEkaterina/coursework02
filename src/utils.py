@@ -19,9 +19,9 @@ def sort_top_vacancies(vacancies: list[dict], n: int):
     return "По вашему запросу ничего не найдено"
 
 
-def search_word_in_description(vacancies: list[dict], keyword: str):
+def search_word_in_description(vacancies: list[dict], keywords: list[str]):
     """ Функция, котороя принимает вакансии и слово для поиска вакансий с этим словом """
-    pattern = re.compile(re.escape(keyword), re.I)
+    pattern = re.compile(r"|".join(re.escape(word) for word in keywords), re.I)
     result = []
     for vacancy in vacancies:
         requirement = vacancy["snippet"].get("requirement", "")

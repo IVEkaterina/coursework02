@@ -4,8 +4,20 @@ from pprint import pprint
 
 
 def user_interaction():
+    hh_api = HeadHunterAPI()
 
     search_query = input("Введите поисковый запрос: ")
+
+    vacancies = hh_api.load_vacancies(search_query)
+    if not vacancies:
+        print("По вашему запросу ничего не найдено")
+        return
+
+    if not isinstance(vacancies[0], dict):
+        print("Ошибка: ожидается список словарей, а получено:", type(vacancies[0]))
+        pprint(vacancies)
+        return
+    pprint(vacancies)
 
     while True:
         try:
@@ -14,14 +26,10 @@ def user_interaction():
         except Exception:
             print("Введите число")
 
-    filter_words = str(input("Введите ключевые слова для фильтрации вакансий: ").split())
-
-    hh_api = HeadHunterAPI()
-    vacancies = hh_api.load_vacancies(search_query)
-    pprint(vacancies)
-
     top_vacancies = sort_top_vacancies(vacancies, top_n)
     pprint(top_vacancies)
+
+    filter_words = input("Введите ключевые слова для фильтрации вакансий: ").split()
 
     filter_description = search_word_in_description(vacancies, filter_words)
     pprint(filter_description)

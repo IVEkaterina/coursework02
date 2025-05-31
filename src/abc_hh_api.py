@@ -1,6 +1,6 @@
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod # pragma: no cover
 
-class HhApiAbc(ABC):
+class HhApiAbc(ABC): # pragma: no cover
     """ Абстрактный класс для работы с API сервиса с вакансиями. """
 
     @abstractmethod

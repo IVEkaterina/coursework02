@@ -1,23 +1,23 @@
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod # pragma: no cover
 
-class ReaderABC(ABC):
+class ReaderABC(ABC): # pragma: no cover
     """ Абстрактный класс для работы с файлами """
 
     @abstractmethod
-    def save_vacancies(self, other):
+    def __save_vacancies(self, other):
         """ Абстрактный метод получения добавления данных в файл """
         pass
 
     @abstractmethod
-    def delete_vacancies(self, other):
+    def delete_vacancy(self, other):
         """ Абстрактный метод удаления данных из файла """
         pass
 
-    def add_vacancies(self, other):
+    def add_vacancy(self, other):
         """ Абстрактный метод добавления данных из файла """
         pass
 
     @abstractmethod
-    def read_vacancies(self, other):
+    def load_vacancies(self):
         """ Абстрактный метод получения данных из файла """
         pass

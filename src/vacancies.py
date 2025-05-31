@@ -11,6 +11,9 @@ class Vacancies:
     salary: Union[str, int, float]
     description: str
 
+    def __repr__(self):
+        return f"Vacancies(name={self.name!r}, salary={self.salary}, url={self.vacancies_url!r})"
+
     def __init__(self, name: str, vacancies_url: str, salary: Union[str, int, float], description: str):
         """ Конструктор для чего-то там """
         self.name = name
@@ -18,23 +21,44 @@ class Vacancies:
         self.salary = self.__validate_salary(salary)
         self.description = description
 
-    def __validate_salary(self, salary: str):
-        """ Метод для валидирования данных """
+    @staticmethod
+    def __validate_salary(salary: Union[str, int, float]) -> int:
+        """ Валидирует и преобразует зарплату к числу """
         if salary is None or salary == "":
             return 0
+
         if isinstance(salary, str):
-            cleaned = salary.replace(" ", "").replace("руб.", "").replace("руб", "")
-            try:
-                if "-" in cleaned:
-                    min_sal, max_sal = cleaned.split("-")
-                    return (int(min_sal) + int(max_sal)) // 2
+            cleaned = salary.replace(" ", "").replace("руб.", "").replace("руб", "").strip()
+            if "-" in cleaned:
+                parts = cleaned.split("-")
+                if len(parts) == 2:
+                    try:
+                        min_sal = int(parts[0])
+                        max_sal = int(parts[1])
+                        return (min_sal + max_sal) // 2
+                    except ValueError:
+                        return 0
                 else:
+                    return 0
+            else:
+                try:
                     return int(cleaned)
-            except Exception:
-                return 0
+                except ValueError:
+                    return 0
+
         if isinstance(salary, (int, float)):
             return int(salary)
+
         raise ValueError("Некорректный формат зарплаты")
+
+    def to_dict(self):
+        """ Метод, который возвращает объект класса vacancies словарем """
+        return {
+            "name": self.name,
+            "url": self.vacancies_url,
+            "salary": self.salary,
+            "description": self.description,
+        }
 
     def __eq__(self, other):
         """ Метод сравнения вакансий """
